@@ -46,3 +46,15 @@ select {
 .error {
   color: red;
 }
+
+button {
+  padding: 0.5rem;
+  padding-inline: 1rem;
+  margin-block: 1rem;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  background-color: rgb(86, 86, 255);
+  color: white;
+  margin-right: 1rem;
+}

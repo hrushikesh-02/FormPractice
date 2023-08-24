@@ -1,5 +1,12 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
+import {
+  Formik,
+  Form,
+  Field,
+  ErrorMessage,
+  FieldArray,
+  FastField,
+} from "formik";
 import * as Yup from "yup";
 import TextError from "./TextError";
 
@@ -27,12 +34,22 @@ const validationSchema = Yup.object({
   channel: Yup.string().required("Required!"),
 });
 
+const validateComments = (value) => {
+  let error;
+  if (!value) {
+    error = "Required!!";
+  }
+  return error;
+};
+
 const YoutubeForm = () => {
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      //   validateOnChange={false}
+      //   validateOnBlur={false}
     >
       <Form>
         <div className="form-control">
@@ -62,14 +79,21 @@ const YoutubeForm = () => {
 
         <div className="form-control">
           <label htmlFor="comments">Comments</label>
-          <Field as="textarea" id="comments" name="comments" />
+          <Field
+            as="textarea"
+            id="comments"
+            name="comments"
+            validate={validateComments}
+          />
+          <ErrorMessage name="comments" component={TextError} />
         </div>
 
         <div className="form-control">
           <label htmlFor="address">Address</label>
-          <Field type="text" id="address" name="address">
+          <FastField type="text" id="address" name="address">
             {(props) => {
               const { field, form, meta } = props;
+              //   console.log("Field Render");
               return (
                 <div className="form-control">
                   <input type="text" id="address" {...field} />
@@ -77,7 +101,7 @@ const YoutubeForm = () => {
                 </div>
               );
             }}
-          </Field>
+          </FastField>
         </div>
 
         <div className="form-control">
@@ -103,11 +127,11 @@ const YoutubeForm = () => {
           <label>List of phone numbers</label>
           <FieldArray name="phNumbers">
             {(fieldArrayProps) => {
-              console.log(fieldArrayProps.form.values);
+              //   console.log(fieldArrayProps.form.values);
               const { form, push, remove } = fieldArrayProps;
               const { values } = form;
+              //   console.log(form.errors);
               const { phNumbers } = values;
-
               return (
                 <div>
                   {phNumbers.map((phno, i) => (
