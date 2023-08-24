@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as Yup from "yup";
 import TextError from "./TextError";
 
@@ -9,6 +9,12 @@ const initialValues = {
   channel: "",
   comments: "",
   address: "",
+  social: {
+    facebook: "",
+    twitter: "",
+  },
+  phoneNumbers: ["", ""],
+  phNumbers: [""],
 };
 
 const onSubmit = (values) => {
@@ -64,15 +70,63 @@ const YoutubeForm = () => {
           <Field type="text" id="address" name="address">
             {(props) => {
               const { field, form, meta } = props;
-              console.log(props);
               return (
                 <div className="form-control">
-                  <input id="address" {...field} />
+                  <input type="text" id="address" {...field} />
                   {meta.touched && meta.error && <div>{meta.error}</div>}
                 </div>
               );
             }}
           </Field>
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="facebook">Facebook Profile</label>
+          <Field type="text" id="facebook" name="social.facebook" />
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="twitter">Twitter Profile</label>
+          <Field type="text" id="twitter" name="social.twitter" />
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="primaryPH">Primary phone number</label>
+          <Field type="text" id="primaryPH" name="phoneNumbers[0]" />
+        </div>
+        <div className="form-control">
+          <label htmlFor="secondaryPH">Secondary phone number</label>
+          <Field type="text" id="secondaryPH" name="phoneNumbers[1]" />
+        </div>
+
+        <div className="form-control">
+          <label>List of phone numbers</label>
+          <FieldArray name="phNumbers">
+            {(fieldArrayProps) => {
+              console.log(fieldArrayProps.form.values);
+              const { form, push, remove } = fieldArrayProps;
+              const { values } = form;
+              const { phNumbers } = values;
+
+              return (
+                <div>
+                  {phNumbers.map((phno, i) => (
+                    <div key={i}>
+                      <Field name={`phNumbers[${i}]`} type="text" />
+                      {i > 0 && (
+                        <button type="button" onClick={() => remove(i)}>
+                          -
+                        </button>
+                      )}
+                      <button type="button" onClick={() => push("")}>
+                        +
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              );
+            }}
+          </FieldArray>
         </div>
 
         <button type="submit">Submit</button>
