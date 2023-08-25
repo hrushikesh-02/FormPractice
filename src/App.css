@@ -5,8 +5,7 @@
 }
 
 .App {
-  display: flex;
-  justify-content: center;
+  width: 100%;
 }
 
 label {
@@ -41,6 +40,9 @@ select {
 
 .form-control {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .error {
@@ -57,4 +59,42 @@ button {
   background-color: rgb(86, 86, 255);
   color: white;
   margin-right: 1rem;
+}
+
+.parent {
+  width: 100%;
+  display: flex;
+}
+
+.lhs {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.rhs {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(200, 185, 185, 0.5);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  gap: 1rem;
+}
+
+.card > h1 {
+  border-bottom: 1px solid;
+}
+
+.cardProp {
+  display: flex;
+  gap: 1rem;
 }
